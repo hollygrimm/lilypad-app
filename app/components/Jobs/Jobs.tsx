@@ -27,7 +27,7 @@ export const Jobs = () => {
       {jobs.map((job) => (
         <div key={job.id} className="p-2 m-2 border">
           <p>Deal ID: {job.id}</p>
-          <p>Status: {job.payee}</p>
+          <p>payee: {job.payee}</p>
           <p>blockTimestamp: {job.blockTimestamp}</p>
           <p>blockNumber: {job.blockNumber}</p>
           <p>module: {job.module}</p>
