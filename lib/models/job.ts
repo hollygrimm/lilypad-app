@@ -1,10 +1,14 @@
 export interface Job {
     id: string;
-    payee: string;
-    blockTimestamp: string;
-    blockNumber: string;
-    module: string;
-    calling_contract: string;
-    inputs: string[];
+    dealId: string;
+    createdAtTimestamp: number;
+    state: string;
+    history: History[];
+  }
+
+  export interface History {
+    id: string;
+    timestamp: number;
+    state: string;
   }
   

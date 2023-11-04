@@ -10,6 +10,7 @@ import {
   fetchJobs,
 } from "@/lib/redux";
 import styles from "./jobs.module.css";
+import React from "react";
 
 export const Jobs = () => {
   const dispatch = useDispatch();
@@ -26,13 +27,15 @@ export const Jobs = () => {
     <div className="p-4">
       {jobs.map((job) => (
         <div key={job.id} className="p-2 m-2 border">
-          <p>Deal ID: {job.id}</p>
-          <p>payee: {job.payee}</p>
-          <p>blockTimestamp: {job.blockTimestamp}</p>
-          <p>blockNumber: {job.blockNumber}</p>
-          <p>module: {job.module}</p>
-          <p>calling_contract: {job.calling_contract}</p>
-          <p>inputs: {job.inputs}</p>
+          <p>Deal ID: {job.dealId}</p>
+          <p>createdAtTimestamp: {new Date(job.createdAtTimestamp * 1000).toLocaleString()}</p>
+          <p>State: {job.state}</p>
+          {job.history.map((history, index) => (
+            <React.Fragment key={index}>
+              <p>State: {history.state}</p>
+              <p>Timestamp: {new Date(history.timestamp * 1000).toLocaleString()}</p>
+            </React.Fragment>
+          ))}
         </div>
       ))}
     </div>

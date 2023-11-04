@@ -1,28 +1,30 @@
 // services/jobService.js
 import { Job } from "@/lib/models/job";
 
-const jobAddedsGql = `
+const jobsGql = `
 {
-  jobAddeds {
-    id,
-    payee,
-    blockTimestamp,
-    blockNumber,
-    module,
-    calling_contract,
-    inputs,
+  jobs {
+    id
+    dealId
+    createdAtTimestamp
+    state
+    history {
+      id
+      timestamp
+      state
+    }
   }
 }
 `;
 1
-const graphURL = "https://api.studio.thegraph.com/proxy/57464/lilypad-sepolia/v0.0.2";
+const graphURL = "https://api.studio.thegraph.com/proxy/57464/lilypad-sepolia/v0.0.6";
 
 const fetchJobsFromApi = async () => {
     const response = await fetch(graphURL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        query: jobAddedsGql,
+        query: jobsGql,
       }),
     });
   
@@ -31,10 +33,13 @@ const fetchJobsFromApi = async () => {
     }
   
     const jsonResponse = await response.json();
-    const jobs: Job[] = jsonResponse.data.jobAddeds.map((job: any) => ({
+    const jobs: Job[] = jsonResponse.data.jobs.map((job: any) => ({
         ...job,
-        blockTimestamp: parseInt(job.blockTimestamp, 10), // converting to number if needed
-        blockNumber: parseInt(job.blockNumber, 10), // converting to number if needed
+        createdAtTimestamp: parseInt(job.createdAtTimestamp, 10),
+        history: job.history.map((historyEntry: any) => ({
+          ...historyEntry,
+          timestamp: parseInt(historyEntry.timestamp, 10), 
+        })),
       }));
   
     return jobs;
