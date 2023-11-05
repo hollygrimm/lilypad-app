@@ -1,5 +1,5 @@
 // services/jobService.js
-import { Job } from "@/lib/models/job";
+import { Job, History } from "@/lib/models/job";
 
 const jobsGql = `
 {
@@ -7,6 +7,8 @@ const jobsGql = `
     id
     dealId
     createdAtTimestamp
+    lastModifiedTimestamp
+    durationSeconds
     state
     history {
       id
@@ -17,7 +19,7 @@ const jobsGql = `
 }
 `;
 1
-const graphURL = "https://api.studio.thegraph.com/proxy/57464/lilypad-sepolia/v0.0.6";
+const graphURL = "https://api.studio.thegraph.com/proxy/57464/lilypad-sepolia/v0.0.7";
 
 const fetchJobsFromApi = async () => {
     const response = await fetch(graphURL, {
@@ -36,10 +38,12 @@ const fetchJobsFromApi = async () => {
     const jobs: Job[] = jsonResponse.data.jobs.map((job: any) => ({
         ...job,
         createdAtTimestamp: parseInt(job.createdAtTimestamp, 10),
+        lastModifiedTimestamp: parseInt(job.lastModifiedTimestamp, 10),
         history: job.history.map((historyEntry: any) => ({
           ...historyEntry,
           timestamp: parseInt(historyEntry.timestamp, 10), 
-        })),
+        }))
+        .sort((a: History, b: History) => a.timestamp - b.timestamp),
       }));
   
     return jobs;
