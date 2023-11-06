@@ -24,7 +24,7 @@ const jobsGql = `
 }
 `;
 1
-const graphURL = "https://api.studio.thegraph.com/proxy/57464/lilypad-sepolia/v.0.0.9";
+const graphURL = "https://api.studio.thegraph.com/proxy/57464/lilypad-sepolia/v0.0.10";
 
 const fetchJobsFromApi = async () => {
     const response = await fetch(graphURL, {

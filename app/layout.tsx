@@ -15,7 +15,7 @@ export default function RootLayout(props: React.PropsWithChildren) {
             <Nav />
 
             <header className={styles.header}>
-              Logo here
+              Lilypad
             </header>
 
             <main className={styles.main}>{props.children}</main>
