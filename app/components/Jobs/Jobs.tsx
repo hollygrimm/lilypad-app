@@ -14,10 +14,12 @@ import React from "react";
 
 const getStateColor = (state: string) => {
   switch (state) {
+    case 'DealAgreed':
+      return 'text-orange-500';
     case 'ResultsSubmitted':
-      return 'text-yellow-500';
-    case 'ResultsChecked':
       return 'text-blue-500';
+    case 'ResultsChecked':
+      return 'text-green-500';
     case 'ResultsAccepted':
       return 'text-green-500';
     case 'MediationRejected':
@@ -53,6 +55,10 @@ export const Jobs = () => {
               {job.history.map((history, index) => (
                 <div key={index} className="mb-2 p-2 bg-gray-100 rounded-md">
                   <p>State: <span className={`font-medium ${getStateColor(history.state)}`}>{history.state}</span></p>
+                  <p>Payee: <span className="font-medium">{history.payee}</span></p>
+                  <p>Amount: <span className="font-medium">{history.amount}</span></p>
+                  <p>Reason: <span className="font-medium">{history.reason}</span></p>
+                  <p>Direction: <span className="font-medium">{history.direction}</span></p>
                   <p>Timestamp: <span className="font-medium">{new Date(history.timestamp * 1000).toLocaleString()}</span></p>
                 </div>
               ))}

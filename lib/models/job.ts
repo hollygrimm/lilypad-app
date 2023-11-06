@@ -11,6 +11,10 @@ export interface Job {
   export interface History {
     id: string;
     timestamp: number;
+    payee: string;
+    amount: number;
+    reason: string;
+    direction: string;
     state: string;
   }
   
