@@ -6,7 +6,6 @@ const jobsGql = `
 {
   jobs {
     id
-    dealId
     createdAtTimestamp
     lastModifiedTimestamp
     durationSeconds
@@ -24,7 +23,7 @@ const jobsGql = `
 }
 `;
 1
-const graphURL = "https://api.studio.thegraph.com/proxy/57464/lilypad-sepolia/v0.0.10";
+const graphURL = "https://api.studio.thegraph.com/proxy/57464/lilypad-sepolia/v0.0.11";
 
 const fetchJobsFromApi = async () => {
     const response = await fetch(graphURL, {
@@ -47,9 +46,9 @@ const fetchJobsFromApi = async () => {
         history: job.history.map((historyEntry: any) => ({
           ...historyEntry,
           timestamp: parseInt(historyEntry.timestamp, 10),
-          amount: formatEther(historyEntry.amount)
+          amount: historyEntry.amount ? formatEther(historyEntry.amount) : null,
         }))
-        .sort((a: History, b: History) => a.timestamp - b.timestamp),
+        .sort((a: History, b: History) => b.timestamp - a.timestamp),
       }));
   
     return jobs;

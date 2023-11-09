@@ -44,7 +44,7 @@ export const Jobs = () => {
     <div className="p-4">
       {jobs.map((job) => (
         <div key={job.id} className="p-4 m-2 border border-gray-200 rounded-lg shadow">
-          <p className="font-semibold text-lg">Deal ID: {job.dealId}</p>
+          <p className="font-semibold text-lg">Deal ID: {job.id}</p>
           <p>Created: <span className="font-medium">{new Date(job.createdAtTimestamp * 1000).toLocaleString()}</span></p>
           <p>Last Modified: <span className="font-medium">{new Date(job.lastModifiedTimestamp * 1000).toLocaleString()}</span></p>
           <p>Duration: <span className="font-medium">{job.durationSeconds} seconds</span></p>
