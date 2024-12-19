@@ -1,29 +1,41 @@
-# Redux Toolkit TypeScript Example
+# Lilypad App
 
-This example shows how to integrate Next.js with [Redux Toolkit](https://redux-toolkit.js.org).
+Lilypad App is a web interface that allows users to track the status of their Lilypad jobs.
 
-The **Redux Toolkit** is a standardized way to write Redux logic (create actions and reducers, setup the store with some default middlewares like redux devtools extension). This example demonstrates each of these features with Next.js
+## Features
+- Track job status and results
+- View job history
 
-## Deploy your own
+## Getting Started
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-redux&project-name=with-redux&repository-name=with-redux)
-
-## How to use
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
+First, install the dependencies:
 
 ```bash
-npx create-next-app --example with-redux with-redux-app
+npm install
 ```
+
+Then, run the development server:
 
 ```bash
-yarn create next-app --example with-redux with-redux-app
+npm run dev
 ```
+
+To build for production:
 
 ```bash
-pnpm create next-app --example with-redux with-redux-app
+npm run build
 ```
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+To start the production server:
+
+```bash
+npm start
+```
+
+The app will be running at [http://localhost:3000](http://localhost:3000).
+
+## Requirements
+
+- Node.js 16.x or later
+- A web3 wallet (like MetaMask)
+- Sepolia network configured in your wallet
