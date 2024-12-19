@@ -2,6 +2,8 @@
 
 /* Core */
 import { useEffect } from "react";
+import { BrowserProvider } from "ethers";
+import { Contract } from "ethers";
 
 /* Instruments */
 import {
@@ -9,6 +11,7 @@ import {
   useDispatch,
   fetchJobs,
 } from "@/lib/redux";
+import { CONTRACTS } from "@/lib/config/contracts";
 import styles from "./jobs.module.css";
 import React from "react";
 
@@ -35,6 +38,50 @@ export const Jobs = () => {
 
   useEffect(() => {
     dispatch(fetchJobs());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const setupEventListeners = async () => {
+      try {
+        // Connect to the Ethereum network using ethers v6 syntax
+        const provider = new BrowserProvider(window.ethereum)
+        
+        // Create contract instances
+        const storageContract = new Contract(
+          CONTRACTS.STORAGE.address,
+          CONTRACTS.STORAGE.abi,
+          provider
+        )
+
+        const paymentsContract = new Contract(
+          CONTRACTS.PAYMENTS.address,
+          CONTRACTS.PAYMENTS.abi,
+          provider
+        )
+
+        // Storage contract events
+        storageContract.on('DealStateChange', (dealId, state, ...args) => {
+          console.log('Deal state changed:', { dealId, state, args })
+          dispatch(fetchJobs())
+        })
+
+        // Payments contract events
+        paymentsContract.on('Payment', (dealId, payee, amount, reason, direction, ...args) => {
+          console.log('Payment processed:', { dealId, payee, amount, reason, direction, args })
+          dispatch(fetchJobs())
+        })
+
+        // Cleanup function
+        return () => {
+          storageContract.removeAllListeners()
+          paymentsContract.removeAllListeners()
+        }
+      } catch (error) {
+        console.error('Error setting up event listeners:', error)
+      }
+    }
+
+    setupEventListeners()
   }, [dispatch]);
 
   if (loading) return <div className="p-4">Loading...</div>;
